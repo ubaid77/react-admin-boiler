@@ -1,12 +1,9 @@
 import {
   REGISTER_USER_SUCCESS,
   LOGIN_USER_SUCCESS,
-  SET_USER,
   REGISTER_USER_ERROR,
   LOGIN_USER_ERROR,
-  SET_USER_ERROR,
   AUTH_LOADING,
-  SET_USER_LOADING,
   LOGOUT_USER,
 } from "./types";
 import { returnError } from "./errorActions";
