@@ -1,20 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import { Container, Form, Button } from "react-bootstrap";
-import { validate } from "../../formik/validate";
+import { validateLogin } from "../../formik/validate";
 import { Formik } from "formik";
+import { loginUser } from "../../redux/actions/userActions";
 
-function Login() {
+const Login = ({ loginUser, loading }) => {
+  let history = useHistory();
   return (
     <Container>
       <h3>Login</h3>
       <hr />
       <Formik
         initialValues={{ email: "", password: "" }}
-        validate={(values) => validate(values)}
+        validate={(values) => validateLogin(values)}
+        onSubmit={async (values) => {
+          await loginUser(values.email, values.password);
+          history.push("/app");
+        }}
       >
-        {({ values, touched, errors, handleChange }) => (
-          <Form noValidate>
+        {({ values, touched, errors, handleChange, handleSubmit }) => (
+          <Form noValidate onSubmit={handleSubmit}>
             <Form.Group>
               <Form.Label>Email address</Form.Label>
               <Form.Control
@@ -47,7 +54,18 @@ function Login() {
               controlId="formGroupButton"
               className="user-btn-wrapper"
             >
-              <Button size="lg">Login</Button>
+              <Button size="lg" onClick={handleSubmit} disabled={loading}>
+                {" "}
+                {loading ? (
+                  <span className="spinner d-inline-block">
+                    <span className="bounce1" />
+                    <span className="bounce2" />
+                    <span className="bounce3" />
+                  </span>
+                ) : (
+                  <span className="label">Login</span>
+                )}
+              </Button>
             </Form.Group>
           </Form>
         )}
@@ -55,6 +73,10 @@ function Login() {
       <Link to="/user/register">Not a member? Register</Link>
     </Container>
   );
-}
+};
 
-export default Login;
+const mapStateToProps = (state) => ({
+  loading: state.user.auth_loading,
+});
+
+export default connect(mapStateToProps, { loginUser })(Login);

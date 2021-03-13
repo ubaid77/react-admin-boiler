@@ -1,5 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { logoutUser } from "../../redux/actions/userActions";
 import { Container, Dropdown } from "react-bootstrap";
 import { BiMenu } from "react-icons/bi";
 import profile from "../../img/profile-pic.jpg";
@@ -18,7 +20,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   </div>
 ));
 
-const TopBar = ({ sidebar_open, setSidebarOpen }) => {
+const TopBar = ({ sidebar_open, setSidebarOpen, logoutUser }) => {
   return (
     <Container fluid className="nav-wrapper">
       <Container className="nav">
@@ -47,7 +49,7 @@ const TopBar = ({ sidebar_open, setSidebarOpen }) => {
             <Dropdown.Menu>
               <Dropdown.Item href="/">Account</Dropdown.Item>
               <Dropdown.Item href="/">Another action</Dropdown.Item>
-              <Dropdown.Item href="/">Logout</Dropdown.Item>
+              <Dropdown.Item onClick={() => logoutUser()}>Logout</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
@@ -56,4 +58,4 @@ const TopBar = ({ sidebar_open, setSidebarOpen }) => {
   );
 };
 
-export default TopBar;
+export default connect(null, { logoutUser })(TopBar);

@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import { connect } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
@@ -19,12 +20,32 @@ const ViewError = React.lazy(() =>
   import(/* webpackChunkName: "views-error" */ "./views/error")
 );
 
-function App() {
+const AuthRoute = ({ component: Component, token, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        token ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/user/login",
+              state: { from: props.location },
+            }}
+          />
+        )
+      }
+    />
+  );
+};
+
+const App = ({ token }) => {
   return (
     <Suspense fallback={<div className="loading" />}>
       <Router>
         <Switch>
-          <Route path="/app" render={(props) => <ViewApp {...props} />} />
+          <AuthRoute path="/app" token={token} component={ViewApp} />
           <Route path="/user" render={(props) => <ViewUser {...props} />} />
           <Route
             path="/error"
@@ -37,6 +58,10 @@ function App() {
       </Router>
     </Suspense>
   );
-}
+};
 
-export default App;
+const mapStateToProps = (state) => ({
+  token: state.user.token,
+});
+
+export default connect(mapStateToProps)(App);
