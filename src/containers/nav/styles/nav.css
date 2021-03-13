@@ -103,4 +103,7 @@
   .custom-dropdown .user-name {
     display: none;
   }
+  .custom-dropdown .dropdown-menu.show {
+    transform: translate(-110px, 42px) !important;
+  }
 }
