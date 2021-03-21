@@ -16,8 +16,8 @@ const Login = ({ loginUser, loading }) => {
         initialValues={{ email: "", password: "" }}
         validate={(values) => validateLogin(values)}
         onSubmit={async (values) => {
-          await loginUser(values.email, values.password);
-          history.push("/app");
+          await loginUser(values.email, values.password, history);
+          // history.push("/app");
         }}
       >
         {({ values, touched, errors, handleChange, handleSubmit }) => (

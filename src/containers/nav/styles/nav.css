@@ -13,12 +13,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  padding-right: 0;
   /* overflow-y: hidden; */
 }
 .nav-wrapper .sidebar-toggle {
-  font-size: 1.5rem;
+  font-size: 2.4rem;
+  font-weight: 300;
   cursor: pointer;
-  color: var(--secondary-color);
+  color: var(--muted-color);
 }
 .nav-wrapper .logo {
   text-transform: uppercase;
@@ -37,7 +40,7 @@
 }
 .custom-dropdown p {
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 400;
   /* padding-top: 15px; */
 }
 
@@ -46,8 +49,9 @@
   box-shadow: var(--box-shadow);
   position: fixed;
   bottom: 0;
+  top: 11vh;
   left: -100%;
-  height: 89.5vh;
+  /* height: 89.5vh; */
   border-top-right-radius: 0.7rem;
   border-bottom-right-radius: 0.7rem;
   transition: all 0.5s ease;

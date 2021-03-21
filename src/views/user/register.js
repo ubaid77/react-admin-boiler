@@ -1,24 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form, Button, Alert } from "react-bootstrap";
 import { validate } from "../../formik/validate";
 import { Formik } from "formik";
 import { registerUser } from "../../redux/actions/userActions";
 
-const Register = ({ registerUser, loading }) => {
+const Register = ({ registerUser, loading, error }) => {
   let history = useHistory();
   return (
     <Container>
       <h3>Register</h3>
       <hr />
-      {/* <Alert variant="danger">User already exists</Alert> */}
+      {error && <Alert variant="danger">{error}</Alert>}
+
       <Formik
         initialValues={{ username: "", email: "", password: "" }}
         validate={(values) => validate(values)}
         onSubmit={async (values) => {
-          await registerUser(values.email, values.username, values.password);
-          history.push("/user");
+          await registerUser(
+            values.email,
+            values.username,
+            values.password,
+            history
+          );
+          // history.push("/user");
         }}
       >
         {({ values, touched, errors, handleChange, handleSubmit }) => (
@@ -93,5 +99,6 @@ const Register = ({ registerUser, loading }) => {
 
 const mapStateToProps = (state) => ({
   loading: state.user.auth_loading,
+  error: state.error.error,
 });
 export default connect(mapStateToProps, { registerUser })(Register);

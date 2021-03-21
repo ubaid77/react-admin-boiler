@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../../redux/actions/userActions";
 import { Container, Dropdown } from "react-bootstrap";
-import { BiMenu } from "react-icons/bi";
+import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import profile from "../../img/profile-pic.jpg";
 import "./styles/nav.css";
 
@@ -28,7 +28,7 @@ const TopBar = ({ sidebar_open, setSidebarOpen, logoutUser }) => {
           className="sidebar-toggle"
           onClick={() => setSidebarOpen(!sidebar_open)}
         >
-          <BiMenu />
+          <HiOutlineMenuAlt1 />
         </div>
         <div className="logo">
           <Link to="/">
