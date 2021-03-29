@@ -18,7 +18,7 @@
   /* overflow-y: hidden; */
 }
 .nav-wrapper .sidebar-toggle {
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-weight: 300;
   cursor: pointer;
   color: var(--muted-color);

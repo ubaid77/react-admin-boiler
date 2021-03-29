@@ -20,12 +20,12 @@ const ViewError = React.lazy(() =>
   import(/* webpackChunkName: "views-error" */ "./views/error")
 );
 
-const AuthRoute = ({ component: Component, token, ...rest }) => {
+const AuthRoute = ({ component: Component, isLoggedIn, ...rest }) => {
   return (
     <Route
       {...rest}
       render={(props) =>
-        token ? (
+        isLoggedIn ? (
           <Component {...props} />
         ) : (
           <Redirect
@@ -40,12 +40,12 @@ const AuthRoute = ({ component: Component, token, ...rest }) => {
   );
 };
 
-const App = ({ token }) => {
+const App = ({ isLoggedIn }) => {
   return (
     <Suspense fallback={<div className="loading" />}>
       <Router>
         <Switch>
-          <AuthRoute path="/app" token={token} component={ViewApp} />
+          <AuthRoute path="/app" isLoggedIn={isLoggedIn} component={ViewApp} />
           <Route path="/user" render={(props) => <ViewUser {...props} />} />
           <Route
             path="/error"
@@ -61,7 +61,7 @@ const App = ({ token }) => {
 };
 
 const mapStateToProps = (state) => ({
-  token: state.user.token,
+  isLoggedIn: state.user.isLoggedIn,
 });
 
 export default connect(mapStateToProps)(App);

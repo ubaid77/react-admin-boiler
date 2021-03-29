@@ -11,9 +11,8 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  token: localStorage.getItem("token"),
   user: null,
-  isLoggedIn: false,
+  isLoggedIn: localStorage.getItem("token") ? true : false,
   auth_loading: false,
   user_loading: false,
 };
@@ -26,11 +25,10 @@ const userReducer = (state = initialState, action) => {
         auth_loading: false,
       };
     case LOGIN_USER_SUCCESS:
-      localStorage.setItem("token", action.payload.tokens.access);
-      localStorage.setItem("refresh_token", action.payload.tokens.refresh);
+      localStorage.setItem("token", action.payload.data.tokens.access);
+      localStorage.setItem("refresh_token", action.payload.data.tokens.refresh);
       return {
         ...state,
-        token: localStorage.getItem("token"),
         isLoggedIn: true,
         auth_loading: false,
       };
@@ -46,8 +44,8 @@ const userReducer = (state = initialState, action) => {
     case SET_USER_ERROR:
     case LOGOUT_USER:
       localStorage.removeItem("token");
+      localStorage.removeItem("refresh_token");
       return {
-        token: null,
         user: null,
         isLoggedIn: false,
         user_loading: false,

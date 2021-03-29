@@ -1,13 +1,16 @@
 import {
   REGISTER_USER_SUCCESS,
   LOGIN_USER_SUCCESS,
+  SET_USER,
   REGISTER_USER_ERROR,
   LOGIN_USER_ERROR,
+  SET_USER_ERROR,
   AUTH_LOADING,
+  SET_USER_LOADING,
   LOGOUT_USER,
 } from "./types";
 import { returnError, clearErrors } from "./errorActions";
-import axios from "axios";
+import AXIOS from "../../config/axios";
 import { baseUrl } from "../../constants/defaultValues";
 
 export const registerUser = (email, username, password, history) => async (
@@ -16,7 +19,7 @@ export const registerUser = (email, username, password, history) => async (
   try {
     dispatch(clearErrors());
     dispatch({ type: AUTH_LOADING });
-    await axios.post(`${baseUrl}/auth/register/`, {
+    await AXIOS.post(`${baseUrl}/auth/register/`, {
       email,
       username,
       password,
@@ -37,7 +40,7 @@ export const loginUser = (email, password, history) => async (dispatch) => {
   try {
     dispatch(clearErrors());
     dispatch({ type: AUTH_LOADING });
-    const { data } = await axios.post(`${baseUrl}/auth/login/`, {
+    const { data } = await AXIOS.post(`${baseUrl}/auth/login/`, {
       email,
       password,
     });
@@ -50,6 +53,18 @@ export const loginUser = (email, password, history) => async (dispatch) => {
       dispatch(returnError(err.response.data.error, err.response.status));
     }
     dispatch({ type: LOGIN_USER_ERROR });
+  }
+};
+
+export const setUser = () => async (dispatch) => {
+  try {
+    dispatch({ type: SET_USER_LOADING });
+
+    const { data } = await AXIOS.get(`${baseUrl}/users/profile`);
+
+    dispatch({ type: SET_USER, payload: data });
+  } catch (err) {
+    dispatch({ type: SET_USER_ERROR });
   }
 };
 

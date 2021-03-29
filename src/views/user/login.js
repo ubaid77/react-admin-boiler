@@ -1,17 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form, Button, Alert } from "react-bootstrap";
 import { validateLogin } from "../../formik/validate";
 import { Formik } from "formik";
 import { loginUser } from "../../redux/actions/userActions";
 
-const Login = ({ loginUser, loading }) => {
+const Login = ({ loginUser, loading, error }) => {
   let history = useHistory();
   return (
     <Container>
       <h3>Login</h3>
       <hr />
+      {error && <Alert variant="danger">{error}</Alert>}
       <Formik
         initialValues={{ email: "", password: "" }}
         validate={(values) => validateLogin(values)}
@@ -77,6 +78,7 @@ const Login = ({ loginUser, loading }) => {
 
 const mapStateToProps = (state) => ({
   loading: state.user.auth_loading,
+  error: state.error.error,
 });
 
 export default connect(mapStateToProps, { loginUser })(Login);
