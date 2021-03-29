@@ -2,9 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Form, Button, Alert } from "react-bootstrap";
-import { validate } from "../../formik/validate";
+import { validate } from "formik/validate";
 import { Formik } from "formik";
-import { registerUser } from "../../redux/actions/userActions";
+import { registerUser } from "redux/actions/userActions";
 
 const Register = ({ registerUser, loading, error }) => {
   let history = useHistory();

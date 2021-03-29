@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
-import Sidebar from "../containers/nav/Sidebar";
-import TopBar from "../containers/nav/TopBar";
-import useWindowDimensions from "../helpers/useWindowDimensions";
+import Sidebar from "containers/nav/Sidebar";
+import TopBar from "containers/nav/TopBar";
+import useWindowDimensions from "helpers/useWindowDimensions";
 
 function AppLayout({ children }) {
   const { width } = useWindowDimensions();

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
-import Logo from "../img/logo_size.jpg";
+import Logo from "img/logo_size.jpg";
 function UserLayout({ children }) {
   return (
     <Container fluid className="user-container">

@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { logoutUser } from "../../redux/actions/userActions";
+import { logoutUser } from "redux/actions/userActions";
 import { Container, Dropdown } from "react-bootstrap";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
-import profile from "../../img/profile-pic.jpg";
+import profile from "img/profile-pic.jpg";
 import "./styles/nav.css";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -20,7 +20,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   </div>
 ));
 
-const TopBar = ({ sidebar_open, setSidebarOpen, logoutUser }) => {
+const TopBar = ({ sidebar_open, setSidebarOpen, logoutUser, email }) => {
   return (
     <Container fluid className="nav-wrapper">
       <Container className="nav">
@@ -39,7 +39,7 @@ const TopBar = ({ sidebar_open, setSidebarOpen, logoutUser }) => {
           <Dropdown>
             <Dropdown.Toggle as={CustomToggle} id="dropdown-basic">
               <span className="user-name">
-                <p>Mohammad Ubaid</p>
+                <p>{email}</p>
               </span>
               <span>
                 <img src={profile} alt="user" />
@@ -58,4 +58,8 @@ const TopBar = ({ sidebar_open, setSidebarOpen, logoutUser }) => {
   );
 };
 
-export default connect(null, { logoutUser })(TopBar);
+const mapStateToProps = (state) => ({
+  email: state.user.user?.email,
+});
+
+export default connect(mapStateToProps, { logoutUser })(TopBar);

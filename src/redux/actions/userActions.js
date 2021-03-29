@@ -60,7 +60,7 @@ export const setUser = () => async (dispatch) => {
   try {
     dispatch({ type: SET_USER_LOADING });
 
-    const { data } = await AXIOS.get(`${baseUrl}/users/profile`);
+    const { data } = await AXIOS.get(`${baseUrl}/users/profile/`);
 
     dispatch({ type: SET_USER, payload: data });
   } catch (err) {
