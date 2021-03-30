@@ -40,7 +40,8 @@ axios.interceptors.response.use(
           refresh: refreshToken,
         })
         .then((res) => {
-          if (res.status === 201) {
+          console.log("refresh token response" + res.data);
+          if (res.status === 200) {
             localStorage.setItem("token", res.data.access);
             axios.defaults.headers.common["Authorization"] =
               "Bearer " + localStorage.getItem("token");
