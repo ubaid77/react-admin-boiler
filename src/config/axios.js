@@ -18,38 +18,36 @@ AXIOS.interceptors.request.use(
 );
 
 // response interceptor
-axios.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  function (error) {
-    const originalRequest = error.config;
-
-    if (
-      error.response.status === 401 &&
-      originalRequest.url === `${baseUrl}/auth/token/refresh/`
-    ) {
+AXIOS.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // Reject promise if usual error
+    if (error.response.status !== 401) {
       return Promise.reject(error);
     }
 
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      const refreshToken = localStorage.getItem("refresh_token");
-      return axios
-        .post(`${baseUrl}/auth/token/refresh/`, {
-          refresh: refreshToken,
-        })
-        .then((res) => {
-          console.log("refresh token response" + res.data);
-          if (res.status === 200) {
-            localStorage.setItem("token", res.data.access);
-            axios.defaults.headers.common["Authorization"] =
-              "Bearer " + localStorage.getItem("token");
-            return axios(originalRequest);
-          }
-        });
-    }
-    return Promise.reject(error);
+    /*
+     * When response code is 401, try to refresh the token.
+     * Eject the interceptor so it doesn't loop in case
+     * token refresh causes the 401 response
+     */
+    axios.interceptors.response.eject(AXIOS);
+
+    return axios
+      .post(`${baseUrl}/auth/token/refresh/`, {
+        refresh: localStorage.getItem("refresh_token"),
+      })
+      .then((response) => {
+        localStorage.setItem("token", response.data.access);
+        error.response.config.headers["Authorization"] =
+          "Bearer " + response.data.access;
+        return axios(error.response.config);
+      })
+      .catch((error) => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("refresh_token");
+        return Promise.reject(error);
+      });
   }
 );
 

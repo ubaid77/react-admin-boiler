@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Form, Button, Alert } from "react-bootstrap";
-import { validateLogin } from "formik/validate";
+import { validateLogin } from "utils/formik/validate";
 import { Formik } from "formik";
 import { loginUser } from "redux/actions/userActions";
 
