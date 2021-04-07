@@ -25,7 +25,6 @@
 }
 .nav-wrapper .logo {
   text-transform: uppercase;
-  letter-spacing: 1px;
 }
 .custom-dropdown .dropdown-menu.show {
   transform: translate(50px, 45px) !important;

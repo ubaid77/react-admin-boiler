@@ -23,7 +23,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 const TopBar = ({ sidebar_open, setSidebarOpen, logoutUser, email }) => {
   return (
     <Container fluid className="nav-wrapper">
-      <Container className="nav">
+      <Container fluid className="nav">
         <div
           className="sidebar-toggle"
           onClick={() => setSidebarOpen(!sidebar_open)}

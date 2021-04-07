@@ -14,7 +14,7 @@ function AppLayout({ children }) {
       <Sidebar sidebar_open={sidebar_open} />
       <main
         style={{
-          marginLeft: sidebar_open ? "150px" : 0,
+          marginLeft: sidebar_open && width > 768 ? "150px" : 0,
           transition: "all .5s ease",
         }}
       >
