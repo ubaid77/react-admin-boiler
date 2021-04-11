@@ -6,16 +6,16 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import { AuthRoute, UnAuthRoute } from "helpers/Routes";
+import { AuthRoute, UnAuthRoute } from "utils/Routes";
 
 const ViewMain = React.lazy(() =>
   import(/* webpackChunkName: "views" */ "./views")
 );
 const ViewApp = React.lazy(() =>
-  import(/* webpackChunkName: "views-app" */ "./views/app")
+  import(/* webpackChunkName: "views-app" */ "./Apps")
 );
 const ViewUser = React.lazy(() =>
-  import(/* webpackChunkName: "views-user" */ "./views/user")
+  import(/* webpackChunkName: "views-user" */ "./Auth")
 );
 const ViewError = React.lazy(() =>
   import(/* webpackChunkName: "views-error" */ "./views/error")
@@ -46,7 +46,7 @@ const App = ({ isLoggedIn }) => {
 };
 
 const mapStateToProps = (state) => ({
-  isLoggedIn: state.user.isLoggedIn,
+  isLoggedIn: state.auth.isLoggedIn,
 });
 
 export default connect(mapStateToProps)(App);
