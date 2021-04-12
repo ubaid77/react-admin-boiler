@@ -1,5 +1,5 @@
 import React from "react";
-import Error from "Views/error";
+import Error from "views/error";
 import Admin from "Admin";
 import Agent from "Agent";
 

@@ -6,10 +6,10 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import { AuthRoute, UnAuthRoute } from "Utils/Routes";
+import { AuthRoute, UnAuthRoute } from "utils/Routes";
 
 const ViewMain = React.lazy(() =>
-  import(/* webpackChunkName: "views" */ "./Views")
+  import(/* webpackChunkName: "views" */ "./views")
 );
 const ViewApp = React.lazy(() =>
   import(/* webpackChunkName: "views-app" */ "./Application")
@@ -18,7 +18,7 @@ const ViewUser = React.lazy(() =>
   import(/* webpackChunkName: "views-user" */ "./Authentication")
 );
 const ViewError = React.lazy(() =>
-  import(/* webpackChunkName: "views-error" */ "./Views/error")
+  import(/* webpackChunkName: "views-error" */ "./views/error")
 );
 
 const App = () => {

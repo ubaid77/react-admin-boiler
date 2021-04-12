@@ -9,9 +9,9 @@ import {
   SET_USER_LOADING,
   LOGOUT_USER,
 } from "Authentication/Redux/Actions/types";
-import { returnError, clearErrors } from "Redux/Actions/errorActions";
-import AXIOS from "Config/axios";
-import { baseUrl } from "Constants/defaultValues";
+import { returnError, clearErrors } from "redux/Actions/errorActions";
+import AXIOS from "config/axios";
+import { baseUrl } from "constants/defaultValues";
 
 export const registerUser = (email, username, password, history) => async (
   dispatch
