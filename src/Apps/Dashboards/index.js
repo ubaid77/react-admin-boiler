@@ -1,4 +1,5 @@
 import React from "react";
+import Error from "views/error";
 import Admin from "./Admin";
 import Agent from "./Agent";
 
@@ -9,7 +10,7 @@ function Dashboard({ userRole, ...rest }) {
     case "AGENT":
       return <Agent {...rest} />;
     default:
-      return null;
+      return <Error />;
   }
 }
 

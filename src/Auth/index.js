@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import UserLayout from "Auth/layout/user.layout";
-import "./views/user/styles/user.css";
+import "./views/user/styles/user.scss";
 
 const Login = React.lazy(() =>
   import(/* webpackChunkName: "user-login" */ "./views/user/login")
