@@ -9,7 +9,7 @@ import {
   SET_USER_LOADING,
   LOGOUT_USER,
 } from "Authentication/Redux/Actions/types";
-import { returnError, clearErrors } from "redux/Actions/errorActions";
+import { returnError, clearErrors } from "redux/actions/errorActions";
 import AXIOS from "config/axios";
 import { baseUrl } from "constants/defaultValues";
 
