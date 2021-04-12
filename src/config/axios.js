@@ -1,5 +1,5 @@
 import axios from "axios";
-import { baseUrl } from "constants/defaultValues";
+import { baseUrl } from "Constants/defaultValues";
 const AXIOS = axios.create();
 
 // request interceptor
