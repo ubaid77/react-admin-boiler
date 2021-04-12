@@ -2,13 +2,7 @@
   background-color: var(--foreground-color);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   z-index: 99;
-  .logo {
-    a {
-      text-decoration: none;
-      color: inherit;
-      text-transform: uppercase;
-    }
-  }
+
   .navbar-nav {
     a {
       text-transform: uppercase;

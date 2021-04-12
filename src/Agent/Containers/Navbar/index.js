@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { GoSearch } from "react-icons/go";
 import { logoutUser } from "Authentication/Redux/Actions/userActions";
 import {
   Dropdown,
@@ -37,8 +37,8 @@ const TopBar = () => {
       variant="light"
       className="nav-wrapper"
     >
-      <Navbar.Brand href="#home" className="logo">
-        <Link to="/">React CRM</Link>
+      <Navbar.Brand href="/" className="logo">
+        React CRM
       </Navbar.Brand>
 
       <Navbar.Collapse id="responsive-navbar-nav">
@@ -48,9 +48,11 @@ const TopBar = () => {
           <Nav.Link href="#pricing">Marketing</Nav.Link>
           <Nav.Link href="#pricing">Leads</Nav.Link>
         </Nav>
-        <Form inline>
+        <Form inline style={{ flexFlow: "initial" }}>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-primary">Search</Button>
+          <Button variant="outline-primary">
+            <GoSearch />
+          </Button>
         </Form>
       </Navbar.Collapse>
       <div className="d-flex mobile-toggle-wrapper">
