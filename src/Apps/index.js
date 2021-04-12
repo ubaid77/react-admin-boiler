@@ -1,13 +1,18 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Switch, Redirect, Route } from "react-router-dom";
 import Dashboard from "Apps/Dashboards";
 import { setUser } from "Auth/redux/actions/userActions";
 
-const App = ({ match, setUser, loading, userRole }) => {
+const App = ({ match }) => {
+  let dispatch = useDispatch();
+
+  const loading = useSelector((state) => state.auth.user_loading);
+  const userRole = useSelector((state) => state.auth.user?.user_type);
+
   useEffect(() => {
-    setUser();
-  }, [setUser]);
+    dispatch(setUser());
+  }, [dispatch]);
 
   return (
     <>
@@ -32,9 +37,4 @@ const App = ({ match, setUser, loading, userRole }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  loading: state.auth.user_loading,
-  userRole: state.auth.user?.user_type,
-});
-
-export default connect(mapStateToProps, { setUser })(App);
+export default App;

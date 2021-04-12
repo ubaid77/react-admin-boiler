@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutUser } from "Auth/redux/actions/userActions";
 import { Container, Dropdown } from "react-bootstrap";
@@ -20,7 +20,9 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   </div>
 ));
 
-const TopBar = ({ sidebar_open, setSidebarOpen, logoutUser, email }) => {
+const TopBar = ({ sidebar_open, setSidebarOpen }) => {
+  let dispatch = useDispatch();
+  const email = useSelector((state) => state.auth.user?.email);
   return (
     <Container fluid className="nav-wrapper">
       <Container fluid className="nav">
@@ -49,7 +51,9 @@ const TopBar = ({ sidebar_open, setSidebarOpen, logoutUser, email }) => {
             <Dropdown.Menu>
               <Dropdown.Item href="/">Account</Dropdown.Item>
               <Dropdown.Item href="/">Another action</Dropdown.Item>
-              <Dropdown.Item onClick={() => logoutUser()}>Logout</Dropdown.Item>
+              <Dropdown.Item onClick={() => dispatch(logoutUser())}>
+                Logout
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
@@ -58,8 +62,4 @@ const TopBar = ({ sidebar_open, setSidebarOpen, logoutUser, email }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  email: state.auth.user?.email,
-});
-
-export default connect(mapStateToProps, { logoutUser })(TopBar);
+export default TopBar;

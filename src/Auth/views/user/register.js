@@ -1,13 +1,18 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { validate } from "Auth/utils/formik/validate";
 import { Formik } from "formik";
 import { registerUser } from "Auth/redux/actions/userActions";
 
-const Register = ({ registerUser, loading, error }) => {
+const Register = () => {
   let history = useHistory();
+  let dispatch = useDispatch();
+
+  const loading = useSelector((state) => state.auth.auth_loading);
+  const error = useSelector((state) => state.error.error);
+
   return (
     <Container>
       <h3>Register</h3>
@@ -18,11 +23,13 @@ const Register = ({ registerUser, loading, error }) => {
         initialValues={{ username: "", email: "", password: "" }}
         validate={(values) => validate(values)}
         onSubmit={async (values) => {
-          await registerUser(
-            values.email,
-            values.username,
-            values.password,
-            history
+          await dispatch(
+            registerUser(
+              values.email,
+              values.username,
+              values.password,
+              history
+            )
           );
           // history.push("/user");
         }}
@@ -97,8 +104,4 @@ const Register = ({ registerUser, loading, error }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  loading: state.auth.auth_loading,
-  error: state.error.error,
-});
-export default connect(mapStateToProps, { registerUser })(Register);
+export default Register;

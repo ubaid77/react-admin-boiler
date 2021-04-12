@@ -1,13 +1,18 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { validateLogin } from "Auth/utils/formik/validate";
 import { Formik } from "formik";
 import { loginUser } from "Auth/redux/actions/userActions";
 
-const Login = ({ loginUser, loading, error }) => {
+const Login = () => {
+  let dispatch = useDispatch();
   let history = useHistory();
+
+  const loading = useSelector((state) => state.auth.auth_loading);
+  const error = useSelector((state) => state.error.error);
+
   return (
     <Container>
       <h3>Login</h3>
@@ -17,8 +22,7 @@ const Login = ({ loginUser, loading, error }) => {
         initialValues={{ email: "", password: "" }}
         validate={(values) => validateLogin(values)}
         onSubmit={async (values) => {
-          await loginUser(values.email, values.password, history);
-          // history.push("/app");
+          await dispatch(loginUser(values.email, values.password, history));
         }}
       >
         {({ values, touched, errors, handleChange, handleSubmit }) => (
@@ -76,9 +80,4 @@ const Login = ({ loginUser, loading, error }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  loading: state.auth.auth_loading,
-  error: state.error.error,
-});
-
-export default connect(mapStateToProps, { loginUser })(Login);
+export default Login;

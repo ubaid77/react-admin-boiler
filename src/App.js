@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
@@ -21,7 +21,8 @@ const ViewError = React.lazy(() =>
   import(/* webpackChunkName: "views-error" */ "./views/error")
 );
 
-const App = ({ isLoggedIn }) => {
+const App = () => {
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   return (
     <Suspense fallback={<div className="loading" />}>
       <Router>
@@ -45,8 +46,4 @@ const App = ({ isLoggedIn }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isLoggedIn: state.auth.isLoggedIn,
-});
-
-export default connect(mapStateToProps)(App);
+export default App;
