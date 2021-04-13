@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { GoSearch } from "react-icons/go";
 import { logoutUser } from "Authentication/Redux/Actions/userActions";
 import RootState from "interfaces/RootStatesTypes";
 import {
@@ -57,7 +58,9 @@ const TopBar = () => {
         </Nav>
         <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-primary">Search</Button>
+          <Button variant="outline-primary">
+            <GoSearch />
+          </Button>
         </Form>
       </Navbar.Collapse>
       <div className="d-flex mobile-toggle-wrapper">
