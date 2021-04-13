@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutUser } from "Authentication/Redux/Actions/userActions";
+import RootState from "interfaces/RootStatesTypes";
 import {
   Dropdown,
   Navbar,
@@ -14,9 +15,14 @@ import {
 import profile from "Application/Shared/Img/profile-pic.jpg";
 import "./Styles/nav.scss";
 
-const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+interface Props {
+  onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  children: React.ReactNode;
+}
+
+const CustomToggle = React.forwardRef(({ children, onClick }: Props, ref) => (
   <div
-    ref={ref}
+    ref={ref as React.RefObject<HTMLDivElement>}
     onClick={(e) => {
       e.preventDefault();
       onClick(e);
@@ -29,7 +35,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 
 const TopBar = () => {
   let dispatch = useDispatch();
-  const username = useSelector((state) => state.auth.user?.username);
+  const username = useSelector((state: RootState) => state.auth.user?.username);
   return (
     <Navbar
       collapseOnSelect

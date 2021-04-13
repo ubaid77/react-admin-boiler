@@ -5,13 +5,14 @@ import { Container, Form, Button, Alert } from "react-bootstrap";
 import { validate } from "Authentication/Utils/Formik/validate";
 import { Formik } from "formik";
 import { registerUser } from "Authentication/Redux/Actions/userActions";
+import RootState from "interfaces/RootStatesTypes";
 
 const Register = () => {
   let history = useHistory();
   let dispatch = useDispatch();
 
-  const loading = useSelector((state) => state.auth.auth_loading);
-  const error = useSelector((state) => state.error.error);
+  const loading = useSelector((state: RootState) => state.auth.auth_loading);
+  const error = useSelector((state: RootState) => state.error.error);
 
   return (
     <Container>
@@ -22,6 +23,8 @@ const Register = () => {
       <Formik
         initialValues={{ username: "", email: "", password: "" }}
         validate={(values) => validate(values)}
+        validateOnChange={false}
+        validateOnBlur={false}
         onSubmit={async (values) => {
           await dispatch(
             registerUser(
@@ -59,7 +62,7 @@ const Register = () => {
                 name="email"
                 onChange={handleChange}
                 value={values.email}
-                isInvalid={errors.email}
+                isInvalid={!!errors.email}
               />
               <Form.Control.Feedback type="invalid">
                 {errors.email}
@@ -83,7 +86,7 @@ const Register = () => {
               controlId="formGroupButton"
               className="user-btn-wrapper btn-multiple-state"
             >
-              <Button size="lg" onClick={handleSubmit} disabled={loading}>
+              <Button size="lg" type="submit" disabled={loading}>
                 {loading ? (
                   <span className="spinner d-inline-block">
                     <span className="bounce1" />

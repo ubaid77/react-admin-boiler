@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
+import { LayoutProps } from "interfaces/GlobalPropTypes";
 import Logo from "Authentication/Img/logo_size.jpg";
-function UserLayout({ children }) {
+
+function UserLayout({ children }: LayoutProps) {
   return (
     <Container fluid className="user-container">
       <Row>

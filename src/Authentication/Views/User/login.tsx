@@ -5,13 +5,14 @@ import { Container, Form, Button, Alert } from "react-bootstrap";
 import { validateLogin } from "Authentication/Utils/Formik/validate";
 import { Formik } from "formik";
 import { loginUser } from "Authentication/Redux/Actions/userActions";
+import RootState from "interfaces/RootStatesTypes";
 
 const Login = () => {
   let dispatch = useDispatch();
   let history = useHistory();
 
-  const loading = useSelector((state) => state.auth.auth_loading);
-  const error = useSelector((state) => state.error.error);
+  const loading = useSelector((state: RootState) => state.auth.auth_loading);
+  const error = useSelector((state: RootState) => state.error.error);
 
   return (
     <Container>
@@ -21,11 +22,13 @@ const Login = () => {
       <Formik
         initialValues={{ email: "", password: "" }}
         validate={(values) => validateLogin(values)}
+        validateOnChange={false}
+        validateOnBlur={false}
         onSubmit={async (values) => {
           await dispatch(loginUser(values.email, values.password, history));
         }}
       >
-        {({ values, touched, errors, handleChange, handleSubmit }) => (
+        {({ values, errors, handleChange, handleSubmit }) => (
           <Form noValidate onSubmit={handleSubmit}>
             <Form.Group>
               <Form.Label>Email address</Form.Label>
@@ -35,7 +38,7 @@ const Login = () => {
                 name="email"
                 onChange={handleChange}
                 value={values.email}
-                isInvalid={errors.email}
+                isInvalid={!!errors.email}
               />
               <Form.Control.Feedback type="invalid">
                 {errors.email}
@@ -59,7 +62,7 @@ const Login = () => {
               controlId="formGroupButton"
               className="user-btn-wrapper"
             >
-              <Button size="lg" onClick={handleSubmit} disabled={loading}>
+              <Button size="lg" type="submit" disabled={loading}>
                 {" "}
                 {loading ? (
                   <span className="spinner d-inline-block">

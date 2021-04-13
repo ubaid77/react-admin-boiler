@@ -1,30 +1,24 @@
-import {
-  REGISTER_USER_SUCCESS,
-  LOGIN_USER_SUCCESS,
-  SET_USER,
-  REGISTER_USER_ERROR,
-  LOGIN_USER_ERROR,
-  SET_USER_ERROR,
-  AUTH_LOADING,
-  SET_USER_LOADING,
-  LOGOUT_USER,
-} from "Authentication/Redux/Actions/types";
+import { ACTIONS } from "Authentication/Interfaces/ActionTypes/AuthActionTypes";
 import { returnError, clearErrors } from "redux/actions/errorActions";
 import AXIOS from "config/axios";
 import { baseUrl } from "constants/defaultValues";
+import { History } from "history";
 
-export const registerUser = (email, username, password, history) => async (
-  dispatch
-) => {
+export const registerUser = (
+  email: string,
+  username: string,
+  password: string,
+  history: History
+) => async (dispatch: Function) => {
   try {
     dispatch(clearErrors());
-    dispatch({ type: AUTH_LOADING });
+    dispatch({ type: ACTIONS.AUTH_LOADING });
     await AXIOS.post(`${baseUrl}/auth/register/`, {
       email,
       username,
       password,
     });
-    dispatch({ type: REGISTER_USER_SUCCESS });
+    dispatch({ type: ACTIONS.REGISTER_USER_SUCCESS });
     history.push("/user");
   } catch (err) {
     if (err.response.status === 500) {
@@ -32,19 +26,23 @@ export const registerUser = (email, username, password, history) => async (
     } else {
       dispatch(returnError(err.response.data.error, err.response.status));
     }
-    dispatch({ type: REGISTER_USER_ERROR });
+    dispatch({ type: ACTIONS.REGISTER_USER_ERROR });
   }
 };
 
-export const loginUser = (email, password, history) => async (dispatch) => {
+export const loginUser = (
+  email: string,
+  password: string,
+  history: History
+) => async (dispatch: Function) => {
   try {
     dispatch(clearErrors());
-    dispatch({ type: AUTH_LOADING });
+    dispatch({ type: ACTIONS.AUTH_LOADING });
     const { data } = await AXIOS.post(`${baseUrl}/auth/login/`, {
       email,
       password,
     });
-    dispatch({ type: LOGIN_USER_SUCCESS, payload: data });
+    dispatch({ type: ACTIONS.LOGIN_USER_SUCCESS, payload: data.data });
     history.push("/app");
   } catch (err) {
     if (err.response.status === 500) {
@@ -52,23 +50,23 @@ export const loginUser = (email, password, history) => async (dispatch) => {
     } else {
       dispatch(returnError(err.response.data.error, err.response.status));
     }
-    dispatch({ type: LOGIN_USER_ERROR });
+    dispatch({ type: ACTIONS.LOGIN_USER_ERROR });
   }
 };
 
-export const setUser = () => async (dispatch) => {
+export const setUser = () => async (dispatch: Function) => {
   try {
-    dispatch({ type: SET_USER_LOADING });
+    dispatch({ type: ACTIONS.SET_USER_LOADING });
 
     const { data } = await AXIOS.get(`${baseUrl}/users/profile/`);
 
-    dispatch({ type: SET_USER, payload: data });
+    dispatch({ type: ACTIONS.SET_USER, payload: data });
   } catch (err) {
-    dispatch({ type: SET_USER_ERROR });
+    dispatch({ type: ACTIONS.SET_USER_ERROR });
   }
 };
 
-export const logoutUser = () => async (dispatch) => {
+export const logoutUser = () => async (dispatch: Function) => {
   dispatch(clearErrors());
-  dispatch({ type: LOGOUT_USER });
+  dispatch({ type: ACTIONS.LOGOUT_USER });
 };

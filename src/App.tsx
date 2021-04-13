@@ -7,22 +7,23 @@ import {
   Redirect,
 } from "react-router-dom";
 import { AuthRoute, UnAuthRoute } from "utils/Routes";
+import RootState from "interfaces/RootStatesTypes";
 
-const ViewMain = React.lazy(() =>
-  import(/* webpackChunkName: "views" */ "./views")
+const ViewMain = React.lazy(
+  () => import(/* webpackChunkName: "views" */ "./views")
 );
-const ViewApp = React.lazy(() =>
-  import(/* webpackChunkName: "views-app" */ "./Application")
+const ViewApp = React.lazy(
+  () => import(/* webpackChunkName: "views-app" */ "./Application")
 );
-const ViewUser = React.lazy(() =>
-  import(/* webpackChunkName: "views-user" */ "./Authentication")
+const ViewUser = React.lazy(
+  () => import(/* webpackChunkName: "views-user" */ "./Authentication")
 );
-const ViewError = React.lazy(() =>
-  import(/* webpackChunkName: "views-error" */ "./views/error")
+const ViewError = React.lazy(
+  () => import(/* webpackChunkName: "views-error" */ "./views/error")
 );
 
 const App = () => {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   return (
     <Suspense fallback={<div className="loading" />}>
       <Router>
@@ -33,12 +34,8 @@ const App = () => {
             isLoggedIn={isLoggedIn}
             component={ViewUser}
           />
-          <Route
-            path="/error"
-            exact
-            render={(props) => <ViewError {...props} />}
-          />
-          <Route path="/" exact render={(props) => <ViewMain {...props} />} />
+          <Route path="/error" exact render={() => <ViewError />} />
+          <Route path="/" exact render={() => <ViewMain />} />
           <Redirect to="/error" />
         </Switch>
       </Router>

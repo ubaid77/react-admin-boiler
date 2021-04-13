@@ -25,13 +25,18 @@ AXIOS.interceptors.response.use(
     if (error.response.status !== 401) {
       return Promise.reject(error);
     }
-
+    if (
+      error.response.status === 401 &&
+      !localStorage.getItem("refresh_token")
+    ) {
+      return Promise.reject(error);
+    }
     /*
      * When response code is 401, try to refresh the token.
      * Eject the interceptor so it doesn't loop in case
      * token refresh causes the 401 response
      */
-    axios.interceptors.response.eject(AXIOS);
+    axios.interceptors.response.eject(AXIOS as any);
 
     return axios
       .post(`${baseUrl}/auth/token/refresh/`, {

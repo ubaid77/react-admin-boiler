@@ -3,12 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { Switch, Redirect, Route } from "react-router-dom";
 import Dashboard from "Application/Dashboard";
 import { setUser } from "Authentication/Redux/Actions/userActions";
+import { RouteComponentProps } from "interfaces/GlobalPropTypes";
+import RootState from "interfaces/RootStatesTypes";
 
-const App = ({ match }) => {
+const App = (props: RouteComponentProps) => {
   let dispatch = useDispatch();
 
-  const loading = useSelector((state) => state.auth.user_loading);
-  const userRole = useSelector((state) => state.auth.user?.user_type);
+  const loading = useSelector((state: RootState) => state.auth.user_loading);
+  const userRole = useSelector(
+    (state: RootState) => state.auth.user?.user_type
+  );
 
   useEffect(() => {
     dispatch(setUser());
@@ -22,12 +26,12 @@ const App = ({ match }) => {
         <Switch>
           <Redirect
             exact
-            from={`${match.url}/`}
-            to={`${match.url}/dashboard`}
+            from={`${props.match.url}/`}
+            to={`${props.match.url}/dashboard`}
           />
           <Route
-            path={`${match.url}/dashboard`}
-            render={(props) => <Dashboard {...props} userRole={userRole} />}
+            path={`${props.match.url}/dashboard`}
+            render={(props) => <Dashboard {...props} userRole={userRole!} />}
           />
 
           <Redirect to="/error" />

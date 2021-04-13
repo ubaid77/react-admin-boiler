@@ -1,12 +1,12 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import TopBar from "Agent/Containers/Navbar";
+import TopBar from "Admin/Containers/Navbar";
+import { LayoutProps } from "interfaces/GlobalPropTypes";
 
-function AgentLayout({ children }) {
+function AdminLayout({ children }: LayoutProps) {
   return (
     <div className="app-container">
       <TopBar />
-
       <main>
         <Container fluid>{children}</Container>
       </main>
@@ -14,4 +14,4 @@ function AgentLayout({ children }) {
   );
 }
 
-export default AgentLayout;
+export default AdminLayout;

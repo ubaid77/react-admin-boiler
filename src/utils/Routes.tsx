@@ -1,6 +1,16 @@
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, RouteProps } from "react-router-dom";
 
-export const AuthRoute = ({ component: Component, isLoggedIn, ...rest }) => {
+interface PrivateRouteProps extends RouteProps {
+  // tslint:disable-next-line:no-any
+  component: any;
+  isLoggedIn: boolean;
+}
+
+export const AuthRoute = ({
+  component: Component,
+  isLoggedIn,
+  ...rest
+}: PrivateRouteProps) => {
   return (
     <Route
       {...rest}
@@ -20,7 +30,11 @@ export const AuthRoute = ({ component: Component, isLoggedIn, ...rest }) => {
   );
 };
 
-export const UnAuthRoute = ({ component: Component, isLoggedIn, ...rest }) => {
+export const UnAuthRoute = ({
+  component: Component,
+  isLoggedIn,
+  ...rest
+}: PrivateRouteProps) => {
   return (
     <Route
       {...rest}
